@@ -20,6 +20,8 @@ const usuarios = [{
 }
 ]
 
+const perfis = [{id:1,nome:'Comum'},{id:2,nome:'Administrador'}]
+
 const typeDefs = gql`
   scalar Date
 
@@ -30,6 +32,11 @@ const typeDefs = gql`
     idade: Int!
     salario: Float
     vip: Boolean
+  }
+
+  type Perfil {
+    id: Int!
+    nome: String
   }
 
   type Produto {
@@ -48,6 +55,8 @@ const typeDefs = gql`
     numerosMegaSena: [Int!]!
     usuarios: [Usuario]!
     usuario(id: Int): Usuario
+    perfis:[Perfil]
+    perfil(id: Int): Perfil
   }
 
 `
@@ -108,6 +117,13 @@ const resolvers = {
       const usuarioFiltrado = usuarios.find(usuario => usuario.id === parseInt(id))
       
       return usuarioFiltrado
+    },
+
+    perfis(){
+      return perfis
+    },
+    perfil(_,{id}){
+      return perfis.find(perfil => perfil.id === id)
     }
     
   }
