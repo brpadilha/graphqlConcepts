@@ -5,22 +5,26 @@ const usuarios = [{
   nome: 'Maria',
   email: 'maria@email.com',
   idade: 20,
+  perfil_id:1
+
   },
   {
   id: 2,
   nome: 'Andreia',
   email: 'andreia@email.com',
   idade: 25,
+  perfil_id:1
 },
 {
   id: 3,
   nome: 'Bruno',
   email: 'bruno@email.com',
   idade: 29,
+  perfil_id:2
 }
 ]
 
-const perfis = [{id:1,nome:'Comum'},{id:2,nome:'Administrador'}]
+const perfis = [{id:1,nome:'comum'},{id:2,nome:'administrador'}]
 
 const typeDefs = gql`
   scalar Date
@@ -32,6 +36,7 @@ const typeDefs = gql`
     idade: Int!
     salario: Float
     vip: Boolean
+    perfil: Perfil
   }
 
   type Perfil {
@@ -65,6 +70,10 @@ const resolvers = {
   Usuario: {
     salario(usuario){
       return usuario.salario_real
+    },
+
+    perfil(usuario){
+      return perfis.find(perfil => perfil.id === usuario.perfil_id)
     }
   },
 
@@ -99,7 +108,8 @@ const resolvers = {
         email: 'teste@email.com',
         idade: 15,
         salario_real: 2400.23,
-        vip: true
+        vip: true,
+        perfil_id:1
       }
     },
 
