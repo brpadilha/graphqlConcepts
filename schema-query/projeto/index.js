@@ -12,11 +12,19 @@ const typeDefs = gql`
     vip: Boolean!
   }
 
+  type Produto {
+    nome: String!
+    preco: Float!
+    desconto: Float
+    precoComDesconto: Float
+  }
+
   #Pontos de entrada da API!
   type Query {
     ola: String!
     horaAtual:Date!
     usuarioLogado: Usuario
+    produtoEmDestaque: Produto
   }
 
 `
@@ -28,6 +36,13 @@ const resolvers = {
     }
   },
 
+  Produto: {
+    precoComDesconto(produto){
+
+      return produto.desconto ? (produto.preco * (1 - produto.desconto)) : produto.preco
+    }
+  },
+
   Query: {
     ola(){
       return 'Olá para você também'
@@ -35,6 +50,14 @@ const resolvers = {
 
     horaAtual(){
       return new Date
+    },
+
+    produtoEmDestaque(){
+      return {
+        nome: 'Farinha',
+        preco: 12.80,
+        // desconto: 0.15
+      }
     },
 
     usuarioLogado(){
