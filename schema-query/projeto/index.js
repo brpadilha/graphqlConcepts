@@ -1,5 +1,25 @@
 import { ApolloServer , gql } from 'apollo-server'
 
+const usuarios = [{
+  id: 1,
+  nome: 'Maria',
+  email: 'maria@email.com',
+  idade: 20,
+  },
+  {
+  id: 2,
+  nome: 'Andreia',
+  email: 'andreia@email.com',
+  idade: 25,
+},
+{
+  id: 3,
+  nome: 'Bruno',
+  email: 'bruno@email.com',
+  idade: 29,
+}
+]
+
 const typeDefs = gql`
   scalar Date
 
@@ -7,9 +27,9 @@ const typeDefs = gql`
     id: String!
     nome: String!
     email: String!
-    idade: Int
+    idade: Int!
     salario: Float
-    vip: Boolean!
+    vip: Boolean
   }
 
   type Produto {
@@ -26,6 +46,7 @@ const typeDefs = gql`
     usuarioLogado: Usuario
     produtoEmDestaque: Produto
     numerosMegaSena: [Int!]!
+    usuarios: [Usuario]!
   }
 
 `
@@ -76,6 +97,10 @@ const resolvers = {
       const crescente = (a,b) => a-b;
 
       return Array(6).fill(0).map(numero => parseInt(Math.random() * 60 + 1)).sort(crescente)
+    },
+
+    usuarios(){
+      return usuarios
     }
     
   }
