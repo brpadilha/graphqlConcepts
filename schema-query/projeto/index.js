@@ -25,6 +25,7 @@ const typeDefs = gql`
     horaAtual:Date!
     usuarioLogado: Usuario
     produtoEmDestaque: Produto
+    numerosMegaSena: [Int!]!
   }
 
 `
@@ -69,6 +70,12 @@ const resolvers = {
         salario_real: 2400.23,
         vip: true
       }
+    },
+
+    numerosMegaSena(){
+      const crescente = (a,b) => a-b;
+
+      return Array(6).fill(0).map(numero => parseInt(Math.random() * 60 + 1)).sort(crescente)
     }
     
   }
